@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Victorpen</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'store:home' %} active {% endif %}" aria-current="page" href="{% url 'store:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == 'store:home' %} active {% endif %}" href="{% url 'store:collections' %}" aria-current="page" >Collections</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'store:cart' %} active {% endif %}" aria-current="page" href="{% url 'store:cart' %}">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  {% if request.resolver_match.url_name == 'store:wishlist' %} active {% endif %}" aria-current="page" href="{% url 'store:wishlist' %}">Wishlist</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">{{ request.user }}</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+           <li><a class="dropdown-item" href="{% url 'store:order' %}">My Orders</a></li>
+
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'loginpage' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+     <form action="{% url 'searchproduct' %}" method="POST">
+    {% csrf_token %}
+    <div class="searchbar">
+        <div class="input-group">
+            <input class="form-control me-2" required name="productsearch" type="search" id="searchproduct" placeholder="Search" aria-label="Search">
+            <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</form>
+
+    </div>
+  </div>
+</nav>
